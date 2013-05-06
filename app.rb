@@ -1,13 +1,13 @@
-
+require 'pp'
 get '/' do
   '<h1>Hello, space. SPACECATS GO HERE. And shit.</h1>'
 end
 
-get '/image' do
+get '/image', :provides => :jpg do
   # sample picks a random array item
   file = Dir.glob("public/img/*.jpg").sample.to_s
-
-  "<img src='#{file.sub! 'public/', ''}' alt='SPACECAT'>"
+  source = Magick::Image.read(file).first.resize_to_fill(70, 70).to_blob
+  source
 end
 
 # # Square image
