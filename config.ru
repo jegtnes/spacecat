@@ -4,5 +4,5 @@ Bundler.setup
 
 require 'sinatra'
 require './app'
-require 'rmagick'
+require 'RMagick'
 run Sinatra::Application

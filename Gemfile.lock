@@ -15,5 +15,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  rmagick
+  rmagick (= 2.13.2)
   sinatra
