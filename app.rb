@@ -18,5 +18,8 @@ def get_kitty(width, height)
   width = width.to_i
   height = height.to_i
 
-  Magick::Image.read(image).first.resize_to_fill(width, height).to_blob
+  image = Magick::Image.read(image).first
+  blob = image.resize_to_fill(width, height).to_blob
+  image.destroy!
+  blob
 end
