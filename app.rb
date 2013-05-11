@@ -1,5 +1,5 @@
 get '/' do
-  '<h1>Hello, space. SPACECATS GO HERE. And shit.</h1>'
+  erb :index
 end
 
 get '/:width', :provides => :jpg do
