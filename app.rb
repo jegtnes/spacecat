@@ -14,12 +14,9 @@ def get_kitty(width, height)
   # sample picks a random array item
   image = Dir.glob("public/img/*.jpg").sample.to_s
 
-  # ImageMagick needs integers as parameters or it craps out
-  width = width.to_i
-  height = height.to_i
+  image = MiniMagick::Image.open(image)
 
-  image = Magick::Image.read(image).first
-  blob = image.resize_to_fill(width, height).to_blob
-  image.destroy!
-  blob
+  image.filter('box').resize("#{width}x#{height}")
+
+  send_file(image.path, :disposition => "inline")
 end
