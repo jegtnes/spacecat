@@ -11,12 +11,18 @@ get '/:width/:height', :provides => :jpg do
 end
 
 def get_kitty(width, height)
+
+  dimensions = width + "x" + height
   # sample picks a random array item
-  image = Dir.glob("public/img/*.jpg").sample.to_s
+  random_image = Dir.glob("public/img/*.jpg").sample.to_s
 
-  image = MiniMagick::Image.open(image)
+  image = MiniMagick::Image.open(random_image)
 
-  image.filter('box').resize("#{width}x#{height}")
+  image.combine_options do
+    image.filter('box') # improves performance for a very slight quality tradeoff
+    image.resize(dimensions + "^^") # ^^ makes the image fill up the larger version of the crop
+    image.extent(dimensions) # crops stuff
+  end
 
   send_file(image.path, :disposition => "inline")
 end
